@@ -27,17 +27,14 @@ struct CardView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                if self.card.isFaceUp {
-                    RoundedRectangle(cornerRadius: 10).fill(Color.white)
-                    RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 3)
+            if (self.card.isFaceUp || !self.card.isMatched) {
+                ZStack {
+                    Pie(startAngle: Angle.degrees(0-90), endAngle: Angle.degrees(110-90), clockwise: true).padding(5).opacity(0.4)
                     Text(self.card.content)
-                } else if !self.card.isMatched {
-                    RoundedRectangle(cornerRadius: 10).fill()
                 }
-                
+                .font(Font.system(size: min(geometry.size.width, geometry.size.height) * 0.75))
+                .cardify(isFaceUp: self.card.isFaceUp)
             }
-            .font(Font.system(size: min(geometry.size.width, geometry.size.height) * 0.75))
         }
     }
 }
