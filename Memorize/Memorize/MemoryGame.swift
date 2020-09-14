@@ -28,7 +28,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: 2*pairIndex))
             cards.append(Card(content: content, id: 2*pairIndex+1))
         }
-//        cards[0].isFaceUp = true
+        cards.shuffle()
     }
     
     mutating func choose(card: Card) {
@@ -53,3 +53,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var id: Int
     }
 }
+
+extension Array where Element: Identifiable {
+    mutating func shuffle() {
+        for index in 0..<self.count {
+            self.swapAt(index, Int.random(in: 0...index))
+        }
+    }
+}
+
